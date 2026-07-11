@@ -1,1 +1,1 @@
-const START_TIME="2026-07-11T00:00:00Z";
+const API_URL='https://streak-api.pokemonmaster034.workers.dev';
