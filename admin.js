@@ -2,24 +2,23 @@ const API_URL = "https://streak-admin.pokemonmaster034.workers.dev/";
 
 async function resetStreak() {
 
-    const confirmed = confirm(
-        "Are you sure you want to reset your streak?\n\nThis cannot be undone."
-    );
-
-    if (!confirmed) return;
+    if (!confirm("Are you sure you want to reset your streak?")) {
+        return;
+    }
 
     const msg = document.getElementById("msg");
-
     msg.textContent = "Resetting streak...";
 
     try {
 
         const response = await fetch(API_URL, {
-            method: "POST"
+            method: "POST",
+            credentials: "include"
         });
 
         if (!response.ok) {
-            throw new Error();
+            const text = await response.text();
+            throw new Error(`HTTP ${response.status}: ${text}`);
         }
 
         msg.textContent = "✅ Streak reset successfully.";
@@ -28,9 +27,10 @@ async function resetStreak() {
             window.location.href = "https://melbgm2.github.io/Streak/";
         }, 1500);
 
-    } catch (e) {
+    } catch (err) {
 
-        msg.textContent = "❌ Unable to reset streak.";
+        console.error(err);
+        msg.textContent = err.message;
 
     }
 
