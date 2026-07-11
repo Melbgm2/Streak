@@ -1,0 +1,1 @@
+Upload to GitHub Pages. Later stages add secure backend/admin.
