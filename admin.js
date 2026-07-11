@@ -1,23 +1,26 @@
 const API_URL = "https://streak-admin.pokemonmaster034.workers.dev/";
 
-async function login() {
-    if (!confirm("Reset the streak to the current time?")) {
-        return;
-    }
+async function resetStreak() {
+
+    const confirmed = confirm(
+        "Are you sure you want to reset your streak?\n\nThis cannot be undone."
+    );
+
+    if (!confirmed) return;
 
     const msg = document.getElementById("msg");
-    msg.textContent = "Resetting...";
+
+    msg.textContent = "Resetting streak...";
 
     try {
+
         const response = await fetch(API_URL, {
             method: "POST"
         });
 
         if (!response.ok) {
-            throw new Error("Request failed");
+            throw new Error();
         }
-
-        const data = await response.json();
 
         msg.textContent = "✅ Streak reset successfully.";
 
@@ -25,8 +28,10 @@ async function login() {
             window.location.href = "https://melbgm2.github.io/Streak/";
         }, 1500);
 
-    } catch (err) {
-        msg.textContent = "❌ Reset failed.";
-        console.error(err);
+    } catch (e) {
+
+        msg.textContent = "❌ Unable to reset streak.";
+
     }
+
 }
